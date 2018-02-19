@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <!--The viewport meta tag is used to improve the presentation and behavior of the samples
+    on iOS devices-->
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no">
+  <title>Ornithological tourism in Monfragüe</title>
+
+  <link rel="stylesheet" href="http://js.arcgis.com/3.8/js/dojo/dijit/themes/claro/claro.css">
+  <link rel="stylesheet" href="http://js.arcgis.com/3.6/js/dojo/dijit/themes/nihilo/nihilo.css">
+  <link rel="stylesheet" href="http://js.arcgis.com/3.8/js/esri/css/esri.css">
+  <link rel="StyleSheet" media="screen" type="text/css" href="css/index.css">
+
+<script type="text/javascript" src="https://www.google.com/jsapi"></script> 
+	<script>dojoConfig = {parseOnLoad: true};</script>
+  <script src="http://js.arcgis.com/3.8/"></script>
+  <script type="text/javascript" src="js/index.js"></script>
+  <script type="text/javascript" src="js/grid.js"></script>
+
+
+
+
+  <script>
+    //Necesario para poder usar los graficos de google
+	  google.load("visualization", "1", {packages:["corechart"]});
+  </script>
+</head>
+<body class="claro">
+	<div id="info">
+       
+      </div>
+<!--[if IE 7]>
+<style>
+  html, body { 
+    margin: 0;
+  }
+</style>
+<![endif]-->
+	<div id="borderContainer" data-dojo-type="dijit/layout/BorderContainer" data-dojo-props=" liveSplitters:true"> <!--design:'sidebar',  -->
+    <div id="barraSup" class="barraSup "  data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'top'">
+      <div id="titleBar">​
+        <img src="images\onlineapp.png" id="titleIcon">​
+        <span id="titleText" >​Ornithological tourism in Monfragüe</span>​
+      </div>
+      <div id="divTool" class="divTool">
+        <table id="barraHerramientas" border="0">
+          <tr>
+            
+             <td align="center" valign="middle">
+               <div id="search" class="commandButton appTheme appThemeHover" title="Location" style="display: block;"onclick="fclick();">
+                <img src="images/youAreHere.png" class="commandIcon">
+              </div>
+            </td>
+             <td align="center" valign="middle">
+              <div id="search" class="commandButton appTheme appThemeHover" title="Delete" style="display: block;" onclick="borrarLinea()">
+                <img src="images/icon14.PNG" class="commandIcon">
+              </div>
+            </td>
+           
+             <td align="center" valign="middle">
+              <div id="search" class="commandButton appTheme appThemeHover" title="Base Maps" style="display: block;"onclick="mbclick();">
+                <img src="images/basemap.png" class="commandIcon">
+                
+              </div>
+            </td>
+             <td align="center" valign="middle">
+              <div id="identify" class="commandButton appTheme appThemeHover" title="Identify" style="display: block;">
+                <img src="images/info.png" class="commandIcon">
+              </div>
+            </td>
+          </tr>
+        </table>
+
+      </div>
+    </div>
+	    <div id="barraIzq" data-dojo-type="dijit/layout/ContentPane" style="width:15%" data-dojo-props="splitter:true, region:'leading'">
+        <div data-dojo-type="dijit/layout/AccordionContainer">
+          <div data-dojo-type="dijit/layout/ContentPane" title="Legend" selected="true">
+          	<div id="divLegend"></div>
+        
+            
+          </div>
+           <div data-dojo-type="dijit/layout/ContentPane" title="Edition"  style="display: block">
+           	<button id="editar">Start Edition</button>
+                <div id="divTop"></div>
+                 <div id="divLeft"></div>
+                 
+          </div>
+           <div data-dojo-type="dijit/layout/ContentPane" title="Geoprocessings"  style="display: block">
+           	     <div>Draw a line and create a topographic profile</div>
+      <button id="Polyline">Draw Line</button>
+	  <button id="Polyline2" onClick=llamarGP();>Create Profile</button>
+	  
+	  <div>Draw an observation point and create a viewshed</div>
+	  <button id="cuenca" onClick=cuenca();>Viewshed</button>
+	  <div>Draw an observation point and see the nearest parkings</div>
+	  <button id="parkings" onClick=parkings();>Parkings</button>
+	 
+	  <p id="imagen" style="visibility: hidden;"><img style="float:middle" src="‪C:\Datos\ajax-loader.gif"/></p>
+	  <p  id="texto" style="visibility: hidden;">Creating profile, please wait</p>
+           	 </div>
+          <div data-dojo-type="dijit/layout/ContentPane" title="Directions">
+              <div id="divDirections"></div>
+              <div> Choose route: <select id="routeName" align="center">
+      <option value="Route 1">Route 1</option>
+      <option value="Route 2">Route 2</option>
+      <option value="Route 3">Route 3</option>
+    </select>
+        <button id="addStopsBtn" style="width:150px">Add stop</button>
+        <button id="clearStopsBtn" style="width:150px">Delete Stop</button>
+        <button id="addBarriersBtn" style="width:150px">Restrict roads</button>
+        <button id="clearBarriersBtn" style="width:150px">Delete restrictions</button>
+        <button id="solveRoutesBtn" style="width:150px">Calculate Route</button>
+        <button id="clearRoutesBtn" style="width:150px">Delete Route</button></div>
+          </div>
+        </div>
+      </div>
+	    <div id="map" class="shadow" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="splitter:true, region:'center'">
+        <div id="searchBox" class="searchBox appTheme" style="right: 2px; top: 2px; bottom: 2px;">
+          <p>Search bar</p>
+          <textarea id="taAddress" type="text">Find Place...</textarea>
+          <button id="btnLocate" data-dojo-type="dijit/form/Button">Locate</button>
+          
+        </div>
+          <div id="MapaBase" class="mapaBase appTheme" style="right: 2px; top: 2px; bottom: 2px;">
+          <p>Base Maps</p>
+           <div id="basemapGallery"></div>
+        </div>
+          <div id="Perfil" class="searchBox appTheme" style="right: 2px; top: 2px; bottom: 2px;">
+          <p>Geoprocessings</p>
+     
+        </div>
+      </div>
+	     <!-- Si queremos mostrar un panel a la izquierda descomentar el siguiente codigo-->
+      <div id="barraDerecha" data-dojo-type="dijit/layout/ContentPane"  data-dojo-props="splitter:true,region:'trailing'">
+        <div style="width: 250px; height: 540px;CCE; border:solid 1px #F7D358;">
+            <div data-dojo-type="dijit/layout/TabContainer" style="width: 100%; height: 100%">
+                <div data-dojo-type="dijit/layout/ContentPane" title="Utilities" data-dojo-props="selected:true" style="background-color: #F5ECCE">
+                  <p><b>Print the current view on the map</b></p>
+                 <div id="divPrint"></div>
+
+<p><b>Select a bird from the dropdown and click the button to see the table</b></p>
+
+                   <select data-dojo-type="dijit/form/ComboBox" id="aves" name="aves" style="width:200px" onchange="qclick();">
+          <option>abejarucos
+</option>
+          <option>águila imperial
+</option>
+          <option>águila perdicera
+</option>
+          <option>águila pescadora
+</option>
+          <option>aguilucho lagunero
+</option>
+          <option selected>alcaraván
+</option>
+          <option>alimoche
+</option>
+            <option>anátidas
+</option>
+          <option>ánsares
+</option>
+          <option>avetorillo
+</option>
+          <option>avetoro
+</option>
+          <option>bigotudo
+</option>
+             <option>buho real
+</option>
+            <option>buitre leonado
+</option>
+          <option>buitres negros
+</option>
+          <option>buscarla unicolor
+</option>
+          <option>calamón
+</option>
+          <option>cernicalo primilla
+</option>
+          <option>chorlito dorado
+</option>
+            <option>cigüeña negra
+</option>
+          <option>cigüeñas blancas
+</option>
+          <option>collalba negra
+</option>
+          <option>cormorán grande
+</option>
+          <option>cormoranes
+</option>
+             <option>fochas
+</option>
+            <option>garceta grande
+</option>
+          <option>garcilla cangrejera
+</option>
+          <option>garza imperial
+</option>
+          <option>garzas
+</option>
+          <option>halcón peregrino
+</option>
+          <option>pagaza piconegra
+</option>
+             <option>pájaro moscón
+</option>
+            <option>pechiazul
+</option>
+          <option>rascón
+</option>
+          <option>somormujos
+</option>
+          <option>vencejo cafre
+</option>
+          
+        </select>
+        <p></p>
+        <button data-dojo-type="dijit.form.Button" id="botonConsulta2" onclick="qclick2">See Table</button>
+        <p></p>
+        <p><b>Bookmarks</b></p>
+        <div id="bookmarks"></div>
+     
+                </div>
+               
+                <div data-dojo-type="dijit/layout/ContentPane" title="Links" data-dojo-props="closable:true" style="background-color: #F5ECCE">
+                  <p><a href="http://www.redex.org/ficheros/documentos/172-desplegable%20ecosistemas%20y%20avifauna-reverso.pdf">Desplegable Ecosistemas y Avifauna 1</a></p>
+		<p><a href="http://www.redex.org/ficheros/documentos/171-desplegable%20ecosistemas%20y%20avifauna.pdf">Desplegable Ecosistemas y Avifauna 2</a></p>
+		<p><a href="http://www.redex.org/ficheros/documentos/168-cuadernillo%20didactico.pdf">Cuadernillo Didáctico</a></p>
+		<p><a href="http://www.redex.org/ficheros/documentos/167-cuaderno%20de%20campo.pdf">Cuaderno de campo</a></p>
+		<p><a href="http://www.redex.org/ficheros/documentos/165-Mapa%20Puntos%20de%20Observacion.pdf">Mapa Observación de Aves</a></p>
+		<p><a href="http://www.redex.org/ficheros/documentos/241-02%20guia%20de%20aves.pdf">Guía de aves de Extremadura</a></p>
+		<p><a href="http://www.redex.org/ficheros/documentos/238-folleto%20zepas.pdf">Folleto Zepas</a></p>
+		<p><a href="http://www.redex.org/ficheros/documentos/454-eDMUNDO.pdf">EDMUNDO. Cuadernillo didáctico</a></p>
+		<p><a href="http://www.redex.org/ficheros/documentos/482-Folleto%20Humedales%20definitivo%203.pdf">Humedales de Extremadura</a></p>
+		<p><a href="http://www.redex.org/ficheros/documentos/181-mapa%20turistico%20extremadura%20cara.pdf">Mapa Turístico</a></p>
+		<p><a href="http://www.redex.org/ficheros/documentos/182-mapa%20turistico%20extremadura(reverso).pdf">Reverso de Mapa Turístico</a></p>
+                </div>
+            </div>
+        </div>
+      </div>
+	 
+	     <div data-dojo-type="dijit/layout/ContentPane"   style="height: 45px;"  data-dojo-props="splitter:true,region:'bottom'">
+	   
+        	 <table data-dojo-type="dojox.grid.DataGrid" jsid="grid" id="gridave"style="display: none;" selectionMode="single">
+         <thead>
+            <tr>
+              <th field="OBJECTID" width="100%"></th> 
+              <th field="rec_Nombre" width="100%"></th>
+              <th field="Mun_INE" width="100%"></th>
+              <th field="Aves" width="100%"></th>
+              
+
+            </tr>
+          </thead>
+        </table>
+	    </div>
+	</div>
+</body>
+</html>

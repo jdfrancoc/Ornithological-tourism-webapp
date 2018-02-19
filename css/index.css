@@ -1,0 +1,204 @@
+ html, body {
+      height: 100%;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      font-family: verdana
+    }
+    .appTheme {
+       /*Color de texto de la app*/
+       /*Text color*/
+      color: #7401DF;
+       /*Color de fondo de la app*/
+       /*Background color*/
+      background-image: -webkit-gradient(
+	linear,
+	left top,
+	left bottom,
+	color-stop(0.42, #8AF774),
+	color-stop(0.75, #067D0A)
+);
+background-image: -o-linear-gradient(bottom, #8AF774 42%, #067D0A 75%);
+background-image: -moz-linear-gradient(bottom, #8AF774 42%, #067D0A 75%);
+background-image: -webkit-linear-gradient(bottom, #8AF774 42%, #067D0A 75%);
+background-image: -ms-linear-gradient(bottom, #8AF774 42%, #067D0A 75%);
+background-image: linear-gradient(to bottom, #8AF774 42%, #067D0A 75%);
+border:solid 1px #000000;
+      opacity : 0.8;
+    }
+    .appThemeHover:hover{
+       /*Fondo cuando pasamos encima de un botón*/
+       /*hover color*/
+      background-color:#8660C1;
+      border-radius: 5px;
+    }
+    #barraSup{
+       /*Fondo de la barra*/
+       /*Bar backgound color*/
+     background-image: -webkit-gradient(
+	linear,
+	left top,
+	left bottom,
+	color-stop(0.42, #8AF774),
+	color-stop(0.75, #067D0A)
+);
+background-image: -o-linear-gradient(bottom, #8AF774 42%, #067D0A 75%);
+background-image: -moz-linear-gradient(bottom, #8AF774 42%, #067D0A 75%);
+background-image: -webkit-linear-gradient(bottom, #8AF774 42%, #067D0A 75%);
+background-image: -ms-linear-gradient(bottom, #8AF774 42%, #067D0A 75%);
+background-image: linear-gradient(to bottom, #8AF774 42%, #067D0A 75%);
+      border:10;
+      /*Color del titulo*/
+      /*Title color*/
+      color: #9A0D0D;
+      height: 45px;
+      overflow-y: hidden;
+      font-family: Helvetica;
+      font-size: 125%;
+        vertical-align: middle;
+    }
+    #borderContainer {
+        width: 100%;
+        height: 100%;
+        padding:0;
+        margin:0;
+    }
+    #barraSup_splitter{
+      /*background-color: #FF9900;*/
+      height: 0;
+      border:0;
+    }
+    #map{
+      padding: 0;
+       border:solid 4px #777777;
+       margin:5px;s
+        }
+      .shadow {
+      -o-border-radius:6px;
+      -moz-border-radius:6px;
+      -webkit-border-radius:6px;
+      border-radius:6px;
+      box-shadow:8px 8px 16px #323834;
+      -webkit-box-shadow:8px 8px 16px #323834;
+      -moz-box-shadow:8px 8px 16px #323834;
+      -o-box-shadow:8px 8px 16px #323834;
+     
+    }
+    #titleBar {
+      height: 40px;
+      margin: 0px;
+      padding: 0px;
+      font-size: 150%;
+      vertical-align: middle;
+      word-wrap: break-word;
+      float: left;
+    }
+
+    #titleText {
+      height: 40px;
+      margin: 0px;
+      padding: 7px;
+      overflow: hidden;
+      position: absolute;
+    }
+
+    #titleIcon {
+      margin: 0px;
+      padding: 0px;
+      float: left;
+    }
+
+    .divTool{
+        height: 60px;
+        margin: 0px;
+        padding: 0px;
+        vertical-align: middle;
+        word-wrap: break-word;
+        float: right;
+        width: 300px;
+    }
+
+    .barraHerramientas{
+      width:300px;
+      height:45px;
+       float: right;
+    }
+
+    .commandButton {
+    width: 44px;
+    height: 44px;
+    cursor: pointer;
+    }
+    .commandIcon {
+    width: 32px;
+    height: 32px;
+    margin-left: 2px;
+    margin-top: 6px;
+    }
+
+
+
+    .searchBox {
+      border-radius: 5px;
+      display: none;
+      width: 200px;
+      max-height: 150px;
+      padding: 4px;
+      position: absolute;
+      overflow: hidden;
+      z-index: 40;
+      word-wrap: break-word;
+     
+
+    }
+ .mapaBase {
+      border-radius: 5px;
+      display: none;
+      width: 400px;
+      max-height: 424px;
+      padding: 4px;
+      position: absolute;
+      overflow: hidden;
+      z-index: 40;
+      word-wrap: break-word;
+     
+
+    }
+    .dijitAccordionInnerContainer {
+    background-color: #F7D358 !important;}
+    
+    
+    .dijitAccordionContainer-dijitContentPane {
+    background-color: #F5ECCE !important;
+    padding: 8px;
+}
+    
+ .dijitContentPane {
+    background-color: F7D358 !important;}
+   /* .dijitBorderContainer-child {
+    border: 3px solid #FF0000 !important;}*/
+ 
+ /*.dijitTabChecked {
+ 	background-color: #F7D358 !important;
+    color: #F7D358 !important;
+}*/
+ .dijitTab {
+    background-color: #F7D358 !important;
+    Color: #FFAA00;
+}
+   .dijitTabChecked {
+    background-color: #F7D358 !important;
+    background:#F7D358 !important;
+    border-color: #FF0000 !important;
+    color: #FF0000 !important;
+}
+
+.dijitTabContainerBottom-dijitContentPane{
+    background-color: #FF0000;
+    padding: 8px;
+}
+
+.dijitTabContainerRight-dijitContentPane {
+    background-color: #FF0000;
+    padding: 8px;
+}
